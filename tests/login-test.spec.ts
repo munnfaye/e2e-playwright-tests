@@ -43,7 +43,7 @@ test.describe("Login Page Flow", () => {
   );
 
   testSetup(
-    "Verify Login With Valid Username & Password",
+    "Verify successful login with valid username & password",
     async ({ loginPage }) => {
       await loginPage.enterValidUsername(validUser as string);
       await loginPage.enterValidPassword(validPassword as string);
