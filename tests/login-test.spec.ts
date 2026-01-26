@@ -48,8 +48,6 @@ test.describe("Login Page Flow", () => {
       await loginPage.enterValidUsername(validUser as string);
       await loginPage.enterValidPassword(validPassword as string);
       await loginPage.clickLoginButton();
-
-      // Verify successful login
       await loginPage.verifySuccessfulLogin();
     }
   );

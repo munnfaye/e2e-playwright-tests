@@ -1,5 +1,4 @@
 export const SELECTORS = {
-    // Login Page
     login: {
         usernameInput: '#user-name',
         passwordInput: '#password',
@@ -7,7 +6,6 @@ export const SELECTORS = {
         errorMessage: '[data-test="error"]',
     },
 
-    // Products Page
     products: {
         pageTitle: '.title',
         inventoryList: '.inventory_list',
