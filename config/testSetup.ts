@@ -1,21 +1,18 @@
 import { test } from "@playwright/test";
 import { LoginPage } from "../pages/login.page";
-import dotenv from "dotenv";
-
-dotenv.config();
 
 export interface TestFixtures {
   loginPage: LoginPage;
 }
 
-export const baseURL = process.env.BASE_URL || "https://www.saucedemo.com";
+export const baseURL = "https://www.saucedemo.com";
 
-export const validUser = process.env.VALID_USER;
-export const lockedUser = process.env.LOCKED_USER;
-export const validPassword = process.env.VALID_PASSWORD;
+export const validUser = "standard_user";
+export const lockedUser = "locked_out_user";
+export const validPassword = "secret_sauce";
 
-export const invalidUser = process.env.INVALID_USER;
-export const invalidPassword = process.env.INVALID_PASSWORD;
+export const invalidUser = "invalid_user";
+export const invalidPassword = "invalid_password";
 
 export const testSetup = test.extend<TestFixtures>({
   loginPage: async ({ page }, use) => {
