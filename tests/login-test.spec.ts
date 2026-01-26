@@ -1,5 +1,5 @@
 import { test } from "@playwright/test";
-import { invalidUser, lockedUser, testSetup, validPassword, validUser } from "../config/testSetup";
+import { invalidPassword, invalidUser, lockedUser, testSetup, validPassword, validUser } from "../config/testSetup";
 
 test.describe("Login Page Flow", () => {
   testSetup("Verify Login Page UI", async ({ loginPage }) => {
@@ -11,7 +11,7 @@ test.describe("Login Page Flow", () => {
     async ({ loginPage }) => {
       await loginPage.enterInvalidUsername(invalidUser as string);
       await loginPage.enterInvalidPassword(
-        process.env.INVALID_PASSWORD as string,
+        invalidPassword as string,
       );
       await loginPage.clickLoginButton();
       await loginPage.verifyErrorMessage("invalidCredentials");
