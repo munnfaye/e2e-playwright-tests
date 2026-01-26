@@ -13,10 +13,10 @@ export class LoginPage {
 
   constructor(page: Page) {
     this.page = page;
-    this.usernameInput = page.locator(SELECTORS.login.usernameInput);
-    this.passwordInput = page.locator(SELECTORS.login.passwordInput);
-    this.loginButton = page.locator(SELECTORS.login.loginButton);
-    this.loginErrorMessage = page.locator(SELECTORS.login.errorMessage);
+    this.usernameInput = page.locator(SELECTORS.login_page.usernameInput);
+    this.passwordInput = page.locator(SELECTORS.login_page.passwordInput);
+    this.loginButton = page.locator(SELECTORS.login_page.loginButton);
+    this.loginErrorMessage = page.locator(SELECTORS.login_page.errorMessage);
   }
 
   async goto(url: string) {
@@ -71,11 +71,11 @@ export class LoginPage {
 
   async verifySuccessfulLogin() {
     await expect(this.page).toHaveURL(/inventory.html/);
-    await expect(this.page.locator(SELECTORS.products.pageTitle)).toHaveText(
+    await expect(this.page.locator(SELECTORS.products_page.pageTitle)).toHaveText(
       "Products",
     );
     await expect(
-      this.page.locator(SELECTORS.products.inventoryList),
+      this.page.locator(SELECTORS.products_page.inventoryList),
     ).toBeVisible();
   }
 
