@@ -1,4 +1,4 @@
-export const ERROR_MESSAGES = {
+export const VALIDATION_MESSAGES = {
   login: {
     usernameRequired: "Epic sadface: Username is required",
     passwordRequired: "Epic sadface: Password is required",

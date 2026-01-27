@@ -4,7 +4,7 @@ export const SELECTORS = {
         hamburgerButton: ".bm-burger-button",
         textLogo: ".app_logo",
         cartButton: ".shopping_cart_link",
-        cartBadde: ".shopping_cart_badge",
+        cartBadge: ".shopping_cart_badge",
         navigationMenu: ".bm-menu",
         closeButton: "#react-burger-cross-btn",
     },
