@@ -1,6 +1,6 @@
 import { Page, Locator, expect } from "@playwright/test";
 import { SELECTORS } from "../locators/selectors";
-import { ERROR_MESSAGES } from "../constants/errorMessages";
+import { VALIDATION_MESSAGES } from "../constants/validationMessages";
 
 export class LoginPage {
   readonly page: Page;
@@ -9,7 +9,7 @@ export class LoginPage {
   readonly loginButton: Locator;
   readonly loginErrorMessage: Locator;
 
-  public static readonly ERRORS = ERROR_MESSAGES.login;
+  public static readonly loginPageValidation = VALIDATION_MESSAGES.login;
 
   constructor(page: Page) {
     this.page = page;
@@ -79,10 +79,10 @@ export class LoginPage {
     ).toBeVisible();
   }
 
-  async verifyErrorMessage(errorType: keyof typeof ERROR_MESSAGES.login) {
+  async verifyErrorMessage(errorType: keyof typeof VALIDATION_MESSAGES.login) {
     await expect(this.loginErrorMessage).toBeVisible();
     await expect(this.loginErrorMessage).toContainText(
-      ERROR_MESSAGES.login[errorType],
+      VALIDATION_MESSAGES.login[errorType],
     );
   }
 

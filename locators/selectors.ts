@@ -4,7 +4,7 @@ export const SELECTORS = {
         hamburgerButton: ".bm-burger-button",
         textLogo: ".app_logo",
         cartButton: ".shopping_cart_link",
-        cartBadde: ".shopping_cart_badge",
+        cartBadge: ".shopping_cart_badge",
         navigationMenu: ".bm-menu",
         closeButton: "#react-burger-cross-btn",
     },
@@ -51,10 +51,30 @@ export const SELECTORS = {
             addToCartButton: "xpath=//button[@id='add-to-cart-test.allthethings()-t-shirt-(red)']",
             removeButton: "xpath=//button[@id='remove-test.allthethings()-t-shirt-(red)']",
         },
-    }
+    },
+
+    cart_page: {
+        checkoutButton: '#checkout',
+    },
+
+    checkout_page: {
+        firstNameInput: '#first-name',
+        lastNameInput: '#last-name',
+        postalCodeInput: '#postal-code',
+        continueButton: '#continue',
+        finishButton: '#finish',
+    },
+
+    confirmation_page: {
+        confirmationHeader: '.complete-header',
+        confirmationText: '.complete-text',
+    },
 } as const;
 
 export type BasePageKey = keyof typeof SELECTORS.base_page;
 export type LoginPageKey = keyof typeof SELECTORS.login_page;
 export type ProductPageKey = keyof typeof SELECTORS.products_page;
 export type ProductKey = keyof typeof SELECTORS.product_selectors;
+export type CartPageKey = keyof typeof SELECTORS.cart_page;
+export type CheckoutPageKey = keyof typeof SELECTORS.checkout_page;
+export type ConfirmationPageKey = keyof typeof SELECTORS.confirmation_page;
