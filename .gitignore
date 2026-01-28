@@ -8,5 +8,3 @@ node_modules/
 /playwright/.auth/
 .vscode/
 package-lock.json
-.env
-README.md
