@@ -1,8 +1,10 @@
 import { test } from "@playwright/test";
 import { LoginPage } from "../pages/login.page";
+import { ProductsPage } from "../pages/products.page";
 
 export interface TestFixtures {
   loginPage: LoginPage;
+  productsPage: ProductsPage;
 }
 
 export const baseURL = "https://www.saucedemo.com";
@@ -20,5 +22,10 @@ export const testSetup = test.extend<TestFixtures>({
     await loginPage.goto(baseURL);
     await page.context().clearCookies();
     await use(loginPage);
+  },
+
+  productsPage: async ({ page }, use) => {
+    const productsPage = new ProductsPage(page);
+    await  use(productsPage);
   },
 });

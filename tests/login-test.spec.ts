@@ -1,7 +1,7 @@
 import { test } from "@playwright/test";
 import { invalidPassword, invalidUser, lockedUser, testSetup, validPassword, validUser } from "../config/testSetup";
 
-test.describe("Login Page Flow", () => {
+test.describe("Login Page Tests", () => {
   testSetup("Verify Login Page UI", async ({ loginPage }) => {
     await loginPage.verifyLoginPageLoaded();
   });

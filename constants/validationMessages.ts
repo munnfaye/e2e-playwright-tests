@@ -6,4 +6,12 @@ export const VALIDATION_MESSAGES = {
     invalidCredentials:
       "Epic sadface: Username and password do not match any user in this service",
   },
+
+  confirmation: {
+    orderCompleteHeader: "Thank you for your order!",
+    orderCompleteText: "Your order has been dispatched",
+  },
 } as const;
+
+export type LoginValidationKey = keyof typeof VALIDATION_MESSAGES.login;
+export type ConfirmationMessageKey = keyof typeof VALIDATION_MESSAGES.confirmation;
