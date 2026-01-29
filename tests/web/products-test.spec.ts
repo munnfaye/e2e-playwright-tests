@@ -1,7 +1,7 @@
 import { test, expect } from "@playwright/test";
-import { testSetup, validUser, validPassword } from "../config/testSetup";
-import { ProductsPage } from "../pages/products.page";
-import { PRODUCT_KEYS, CHECKOUT_DATA } from "../constants/testData";
+import { testSetup, validUser, validPassword } from "../../config/testSetup";
+import { ProductsPage } from "../../pages/products.page";
+import { PRODUCT_KEYS, CHECKOUT_DATA } from "../../constants/testData";
 
 test.describe("Products Page - UI Verification", () => {
     testSetup("Verify display products page with all elements", async ({ loginPage, page }) => {

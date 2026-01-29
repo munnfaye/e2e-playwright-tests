@@ -27,7 +27,15 @@ export default defineConfig({
   projects: [
     {
       name: 'chromium',
+      testDir: './tests/web',
       use: { ...devices['Desktop Chrome'] },
     },
+    {
+      name: 'api',
+      testDir: './tests/api',
+      use: {
+        baseURL: 'https://jsonplaceholder.typicode.com',
+      }
+    }
   ],
 });
