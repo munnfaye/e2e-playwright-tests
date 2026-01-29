@@ -1,5 +1,5 @@
 import { test } from "@playwright/test";
-import { invalidPassword, invalidUser, lockedUser, testSetup, validPassword, validUser } from "../config/testSetup";
+import { invalidPassword, invalidUser, lockedUser, testSetup, validPassword, validUser } from "../../config/testSetup";
 
 test.describe("Login Page Tests", () => {
   testSetup("Verify Login Page UI", async ({ loginPage }) => {
