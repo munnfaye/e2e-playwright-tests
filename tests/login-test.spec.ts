@@ -9,17 +9,17 @@ test.describe("Login Page Tests", () => {
   testSetup(
     "Verify error displayed for invalid credentials",
     async ({ loginPage }) => {
-      await loginPage.enterInvalidUsername(invalidUser as string);
+      await loginPage.enterInvalidUsername(invalidUser);
       await loginPage.enterInvalidPassword(
-        invalidPassword as string,
+        invalidPassword,
       );
       await loginPage.clickLoginButton();
       await loginPage.verifyErrorMessage("invalidCredentials");
     });
 
   testSetup("Verify error displayed for locked user", async ({ loginPage }) => {
-    await loginPage.enterLockedUsername(lockedUser as string);
-    await loginPage.enterValidPassword(validPassword as string);
+    await loginPage.enterLockedUsername(lockedUser);
+    await loginPage.enterValidPassword(validPassword);
     await loginPage.clickLoginButton();
     await loginPage.verifyErrorMessage("lockedUser");
   });
@@ -27,7 +27,7 @@ test.describe("Login Page Tests", () => {
   testSetup(
     "Verify error displayed when username is empty",
     async ({ loginPage }) => {
-      await loginPage.enterValidPassword(validPassword as string);
+      await loginPage.enterValidPassword(validPassword);
       await loginPage.clickLoginButton();
       await loginPage.verifyErrorMessage("usernameRequired");
     }
@@ -36,7 +36,7 @@ test.describe("Login Page Tests", () => {
   testSetup(
     "Verify error displayed when password is empty",
     async ({ loginPage }) => {
-      await loginPage.enterValidUsername(validUser as string);
+      await loginPage.enterValidUsername(validUser);
       await loginPage.clickLoginButton();
       await loginPage.verifyErrorMessage("passwordRequired");
     }
@@ -45,8 +45,8 @@ test.describe("Login Page Tests", () => {
   testSetup(
     "Verify successful login with valid username & password",
     async ({ loginPage }) => {
-      await loginPage.enterValidUsername(validUser as string);
-      await loginPage.enterValidPassword(validPassword as string);
+      await loginPage.enterValidUsername(validUser);
+      await loginPage.enterValidPassword(validPassword);
       await loginPage.clickLoginButton();
       await loginPage.verifySuccessfulLogin();
     }

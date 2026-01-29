@@ -5,8 +5,8 @@ import { PRODUCT_KEYS, CHECKOUT_DATA } from "../constants/testData";
 
 test.describe("Products Page - UI Verification", () => {
     testSetup("Verify display products page with all elements", async ({ loginPage, page }) => {
-        await loginPage.enterValidUsername(validUser as string);
-        await loginPage.enterValidPassword(validPassword as string);
+        await loginPage.enterValidUsername(validUser);
+        await loginPage.enterValidPassword(validPassword);
         await loginPage.clickLoginButton();
 
         const productsPage = new ProductsPage(page);
@@ -14,8 +14,8 @@ test.describe("Products Page - UI Verification", () => {
     });
 
     testSetup("Verify display product container and correct product count", async ({ loginPage, page }) => {
-        await loginPage.enterValidUsername(validUser as string);
-        await loginPage.enterValidPassword(validPassword as string);
+        await loginPage.enterValidUsername(validUser);
+        await loginPage.enterValidPassword(validPassword);
         await loginPage.clickLoginButton();
 
         const productsPage = new ProductsPage(page);
@@ -23,8 +23,8 @@ test.describe("Products Page - UI Verification", () => {
     });
 
     testSetup("Verify single product has all required elements", async ({ loginPage, page }) => {
-        await loginPage.enterValidUsername(validUser as string);
-        await loginPage.enterValidPassword(validPassword as string);
+        await loginPage.enterValidUsername(validUser);
+        await loginPage.enterValidPassword(validPassword);
         await loginPage.clickLoginButton();
 
         const productsPage = new ProductsPage(page);
@@ -33,8 +33,8 @@ test.describe("Products Page - UI Verification", () => {
     });
 
     testSetup("Verify all products have details", async ({ loginPage, page }) => {
-        await loginPage.enterValidUsername(validUser as string);
-        await loginPage.enterValidPassword(validPassword as string);
+        await loginPage.enterValidUsername(validUser);
+        await loginPage.enterValidPassword(validPassword);
         await loginPage.clickLoginButton();
 
         const productsPage = new ProductsPage(page);
@@ -49,8 +49,8 @@ test.describe("Products Page - UI Verification", () => {
 
 test.describe("Products Page - Add to Cart", () => {
     testSetup("Verify all products have Add to cart button initially", async ({ loginPage, page }) => {
-        await loginPage.enterValidUsername(validUser as string);
-        await loginPage.enterValidPassword(validPassword as string);
+        await loginPage.enterValidUsername(validUser);
+        await loginPage.enterValidPassword(validPassword);
         await loginPage.clickLoginButton();
 
         const productsPage = new ProductsPage(page);
@@ -58,8 +58,8 @@ test.describe("Products Page - Add to Cart", () => {
     });
 
     testSetup("Verify able to add product to cart successfully", async ({ loginPage, page }) => {
-        await loginPage.enterValidUsername(validUser as string);
-        await loginPage.enterValidPassword(validPassword as string);
+        await loginPage.enterValidUsername(validUser);
+        await loginPage.enterValidPassword(validPassword);
         await loginPage.clickLoginButton();
 
         const productsPage = new ProductsPage(page);
@@ -71,8 +71,8 @@ test.describe("Products Page - Add to Cart", () => {
     });
 
     testSetup("Verify specific product Add to cart button", async ({ loginPage, page }) => {
-        await loginPage.enterValidUsername(validUser as string);
-        await loginPage.enterValidPassword(validPassword as string);
+        await loginPage.enterValidUsername(validUser);
+        await loginPage.enterValidPassword(validPassword);
         await loginPage.clickLoginButton();
 
         const productsPage = new ProductsPage(page);
@@ -80,8 +80,8 @@ test.describe("Products Page - Add to Cart", () => {
     });
 
     testSetup("Verify Remove button not visible initially", async ({ loginPage, page }) => {
-        await loginPage.enterValidUsername(validUser as string);
-        await loginPage.enterValidPassword(validPassword as string);
+        await loginPage.enterValidUsername(validUser);
+        await loginPage.enterValidPassword(validPassword);
         await loginPage.clickLoginButton();
 
         const productsPage = new ProductsPage(page);
@@ -91,8 +91,8 @@ test.describe("Products Page - Add to Cart", () => {
     test.describe("Products Page - Cart Navigation", () => {
 
         testSetup("Verify able to navigate to cart page successfully", async ({ loginPage, page }) => {
-            await loginPage.enterValidUsername(validUser as string);
-            await loginPage.enterValidPassword(validPassword as string);
+            await loginPage.enterValidUsername(validUser);
+            await loginPage.enterValidPassword(validPassword);
             await loginPage.clickLoginButton();
 
             const productsPage = new ProductsPage(page);
@@ -103,8 +103,8 @@ test.describe("Products Page - Add to Cart", () => {
         });
 
         testSetup("Verify able proceed to checkout from cart", async ({ loginPage, page }) => {
-            await loginPage.enterValidUsername(validUser as string);
-            await loginPage.enterValidPassword(validPassword as string);
+            await loginPage.enterValidUsername(validUser);
+            await loginPage.enterValidPassword(validPassword);
             await loginPage.clickLoginButton();
 
             const productsPage = new ProductsPage(page);
@@ -119,8 +119,8 @@ test.describe("Products Page - Add to Cart", () => {
     test.describe("Products Page - Complete Purchase Flow", () => {
 
         testSetup("Verify able to complete full purchase journey", async ({ loginPage, page }) => {
-            await loginPage.enterValidUsername(validUser as string);
-            await loginPage.enterValidPassword(validPassword as string);
+            await loginPage.enterValidUsername(validUser);
+            await loginPage.enterValidPassword(validPassword);
             await loginPage.clickLoginButton();
 
             const productsPage = new ProductsPage(page);
@@ -134,8 +134,8 @@ test.describe("Products Page - Add to Cart", () => {
         });
 
         testSetup("Verify checkout fills all required fields", async ({ loginPage, page }) => {
-            await loginPage.enterValidUsername(validUser as string);
-            await loginPage.enterValidPassword(validPassword as string);
+            await loginPage.enterValidUsername(validUser);
+            await loginPage.enterValidPassword(validPassword);
             await loginPage.clickLoginButton();
 
             const productsPage = new ProductsPage(page);
@@ -149,8 +149,8 @@ test.describe("Products Page - Add to Cart", () => {
         });
 
         testSetup("Verify order confirmation displays success message", async ({ loginPage, page }) => {
-            await loginPage.enterValidUsername(validUser as string);
-            await loginPage.enterValidPassword(validPassword as string);
+            await loginPage.enterValidUsername(validUser);
+            await loginPage.enterValidPassword(validPassword);
             await loginPage.clickLoginButton();
 
             const productsPage = new ProductsPage(page);
