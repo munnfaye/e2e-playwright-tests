@@ -9,12 +9,12 @@ export interface TestFixtures {
 
 export const baseURL = "https://www.saucedemo.com";
 
-export const validUser = "standard_user";
-export const lockedUser = "locked_out_user";
-export const validPassword = "secret_sauce";
+export const validUser:string = "standard_user";
+export const lockedUser:string = "locked_out_user";
+export const validPassword:string = "secret_sauce";
 
-export const invalidUser = "invalid_user";
-export const invalidPassword = "invalid_password";
+export const invalidUser:string = "invalid_user";
+export const invalidPassword:string = "invalid_password";
 
 export const testSetup = test.extend<TestFixtures>({
   loginPage: async ({ page }, use) => {
