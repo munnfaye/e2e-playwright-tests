@@ -106,8 +106,8 @@ Reports are generated in the `playwright-report/` folder.
 ![Web Console Output](assets/web-console-output.png)
 
 #### HTML Report
-![Web HTML Report](assets/web-html-report-part1.png)
-![Web HTML Report](assets/web-html-report-part2.png)
+![Web HTML Report](assets/web-html-report-section1.png)
+![Web HTML Report](assets/web-html-report-section2.png)
 
 ## Contact
 
