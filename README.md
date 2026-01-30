@@ -1,11 +1,16 @@
-# E2E Playwright Test
-Automated end-to-end test for e-commerce platform using Playwright and TypeScript
+# E2E-PLAYWRIGHT-TESTS
+
+End-to-end testing project using Playwright with TypeScript for web and API automation.
 
 ## Prerequisites
 
 Before you start, you should have the following installed:
 - Node.js (v16 or higher)
 - npm or yarn package manager
+
+**Versions used:**
+- Node.js: v25.4.0
+- npm: 11.7.0
 
 ## Installation
 
@@ -26,34 +31,39 @@ npx playwright install
 ```
 
 ## Project Structure
+
 ```
-e2e-playwright-tests/
-│
-├── locators/                   
-│   └── selectors.ts           # Centralized selectors management
-|
-├── config/                   
-│   └── testSetup.ts           # Fixtures, environment variables, base config
-|
-├── constants/                   
-│   ├── testData.ts            # Test data (product keys, checkout info)
-|   ├── uiConstants.ts         # UI button labels
-|   └── validationMessages.ts  # Error and success messages
-|
-├── pages/                     
-│   ├── LoginPage.ts           # Login functions
-│   └── ProductsPage.ts        # Products and cart functions
-│
+E2E-PLAYWRIGHT-TESTS/
+├── assets/
+│   ├── api-console-output.png
+│   ├── api-html-report.png
+│   ├── web-console-output.png
+│   ├── web-html-report-part1.png
+│   └── web-html-report-part2.png
+├── config/
+│   └── testSetup.ts
+├── constants/
+│   ├── testData.ts
+│   ├── uiConstants.ts
+│   └── validationMessages.ts
+├── locators/
+│   └── selectors.ts
+├── pages/
+│   ├── base.page.ts
+│   ├── login.page.ts
+│   └── products.page.ts
 ├── tests/
-│   ├── login-test.spec.ts     # Login page tests
-│   └── product-test.spec.ts   # Product and cart pages tests
-|
-├── types/                     
-│   ├── checkout.ts            # Checkout info interface
-│
-├── .gitignore                 # Git ignore rules
-├── playwright.config.ts       # Playwright configuration
-└── README.md                  # Project documentation
+│   ├── api/
+│   │   └── posts.api.spec.ts
+│   └── web/
+│       ├── login-test.spec.ts
+│       └── products-test.spec.ts
+├── types/
+│   └── checkout.ts
+├── playwright-report/
+├── test-results/
+├── playwright.config.ts
+└── package.json
 ```
 
 ## Running Tests
@@ -63,21 +73,41 @@ e2e-playwright-tests/
 npx playwright test
 ```
 
-### Run specific test file
+### Run web tests only
 ```bash
-npx playwright test tests/login-test.spec.ts
-npx playwright test tests/products-test.spec.ts
+npx playwright test --project=chromium
 ```
 
-### View test report
+### Run API tests only
+```bash
+npx playwright test --project=api
+```
+
+## Test Reports
+
+### View HTML report
 ```bash
 npx playwright show-report
 ```
 
-### Debug tests
-```bash
-npx playwright test --debug
-```
+Reports are generated in the `playwright-report/` folder.
+
+## Test Results
+
+### API Tests
+#### Console Output
+![API Console Output](assets/api-console-output.png)
+
+#### HTML Report
+![API HTML Report](assets/api-html-report.png)
+
+### Web Tests
+#### Console Output
+![Web Console Output](assets/web-console-output.png)
+
+#### HTML Report
+![Web HTML Report](assets/web-html-report-part1.png)
+![Web HTML Report](assets/web-html-report-part2.png)
 
 ## Contact
 
