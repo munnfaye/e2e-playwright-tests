@@ -16,8 +16,8 @@ Before you start, you should have the following installed:
 
 1. Clone the repository:
 ```bash
-git clone https://github.com/yourusername/e2e-playwright-test.git
-cd e2e-playwright-test
+git clone https://github.com/munnfaye/e2e-playwright-tests.git
+cd e2e-playwright-tests
 ```
 
 2. Install dependencies:
@@ -38,11 +38,12 @@ E2E-PLAYWRIGHT-TESTS/
 │   ├── api-console-output.png
 │   ├── api-html-report.png
 │   ├── web-console-output.png
-│   ├── web-html-report-part1.png
-│   └── web-html-report-part2.png
+│   ├── web-html-report-section1.png
+│   └── web-html-report-section2.png
 ├── config/
 │   └── testSetup.ts
 ├── constants/
+│   ├── apiTestData.ts
 │   ├── testData.ts
 │   ├── uiConstants.ts
 │   └── validationMessages.ts
