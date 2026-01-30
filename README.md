@@ -17,7 +17,7 @@ Before you start, you should have the following installed:
 1. Clone the repository:
 ```bash
 git clone https://github.com/yourusername/e2e-playwright-test.git
-cd e2e-playwright test
+cd e2e-playwright-test
 ```
 
 2. Install dependencies:
