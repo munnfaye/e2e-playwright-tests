@@ -1,115 +1,105 @@
 import { test, expect } from '@playwright/test';
+import { testPost, updatedTitle } from '../../constants/apiTestData';
 
-const BASE_URL = 'https://jsonplaceholder.typicode.com';
+test.describe.serial('Posts API CRUD Operations', () => {
+  const testId = 1;
 
-let createdPostId: number;
-
-const newPost = {
-  title: 'My Test Post',
-  body: 'This is the body of my test post for API automation assessment.',
-  userId: 1
-};
-
-const updatedPost = {
-  title: 'My Updated Test Post',
-  body: 'This body has been updated to verify the PATCH operation works.'
-};
-
-test.describe('Posts API CRUD Operations', () => {
-  test('CREATE - should create a new post', async ({ request }) => {
-    const response = await request.post(`${BASE_URL}/posts`, {
-      data: newPost
+  test('POST /posts - create a new post', async ({ request }) => {
+    const response = await request.post('/posts', {
+      data: testPost
     });
 
-    expect(response.status()).toBe(201);
+    await test.step('Verify response status', async () => {
+      expect(response.ok()).toBeTruthy();
+      expect(response.status()).toBe(201);
+    });
 
-    const responseBody = await response.json();
+    await test.step('Verify response body', async () => {
+      const responseBody = await response.json();
 
-    expect(responseBody.id).toBeDefined();
-    expect(typeof responseBody.id).toBe('number');
-    expect(responseBody.title).toBe(newPost.title);
-    expect(responseBody.body).toBe(newPost.body);
-    expect(responseBody.userId).toBe(newPost.userId);
-
-    createdPostId = responseBody.id;
-    console.log(`Created post with ID: ${createdPostId}`);
+      expect(responseBody.id).toBeDefined();
+      expect(typeof responseBody.id).toBe('number');
+      expect(responseBody.title).toBe(testPost.title);
+      expect(responseBody.body).toBe(testPost.body);
+      expect(responseBody.userID).toBe(testPost.userID);
+    });
   });
 
-  test('READ - should retrieve the created post', async ({ request }) => {
-    const testId = 1;
+  test('GET /posts/:id - retrieve a post', async ({ request }) => {
+    const response = await request.get(`/posts/${testId}`);
 
-    const response = await request.get(`${BASE_URL}/posts/${testId}`);
-    
-    expect(response.status()).toBe(200);
+    await test.step('Verify response status', async () => {
+      expect(response.ok()).toBeTruthy();
+      expect(response.status()).toBe(200);
+    });
 
+    await test.step('Verify response body', async () => {
+      const responseBody = await response.json();
 
-    const responseBody = await response.json();
+      expect(responseBody.id).toBe(testId);
+      expect(responseBody.title).toBeDefined();
+      expect(responseBody.body).toBeDefined();
+      expect(responseBody.userId).toBeDefined();
 
-    expect(responseBody.id).toBe(testId);
-    expect(responseBody.title).toBeDefined();
-    expect(responseBody.body).toBeDefined();
-    expect(responseBody.userId).toBeDefined();
-
-    expect(typeof responseBody.title).toBe('string');
-    expect(typeof responseBody.body).toBe('string');
-    expect(typeof responseBody.userId).toBe('number');
-
-    console.log(`Retrieved post: ${responseBody.title}`);
+      expect(typeof responseBody.title).toBe('string');
+      expect(typeof responseBody.body).toBe('string');
+      expect(typeof responseBody.userId).toBe('number');
+    });
   });
 
-  test('UPDATE - should update the post using PATCH', async ({ request }) => {
-    const testId = 1;
-
-    const response = await request.patch(`${BASE_URL}/posts/${testId}`, {
+  test('PATCH /posts/:id - update post title', async ({ request }) => {
+    const response = await request.patch(`/posts/${testId}`, {
       data: {
-        title: updatedPost.title
+        title: updatedTitle
       }
     });
 
-    expect(response.status()).toBe(200);
+    await test.step('Verify response status', async () => {
+      expect(response.ok()).toBeTruthy();
+      expect(response.status()).toBe(200);
+    });
 
-    const responseBody = await response.json();
+    await test.step('Verify response body', async () => {
+      const responseBody = await response.json();
 
-    expect(responseBody.title).toBe(updatedPost.title);
-    expect(responseBody.id).toBe(testId);
-
-    console.log(`Updated post title to: ${responseBody.title}`);
+      expect(responseBody.title).toBe(updatedTitle);
+      expect(responseBody.id).toBe(testId);
+    });
   });
 
-  test('VERIFY UPDATE - should confirm the update was applied', async ({ request }) => {
-    const testId = 1;
+  test('GET /posts/:id - verify update was applied', async ({ request }) => {
+    const response = await request.get(`/posts/${testId}`);
 
-    const response = await request.get(`${BASE_URL}/posts/${testId}`);
+    await test.step('Verify response status', async () => {
+      expect(response.ok()).toBeTruthy();
+      expect(response.status()).toBe(200);
+    });
 
-    expect(response.status()).toBe(200);
+    await test.step('Verify response body', async () => {
+      const responseBody = await response.json();
 
-    const responseBody = await response.json();
-
-    expect(responseBody.id).toBe(testId);
-    expect(responseBody.title).toBeDefined();
-    expect(responseBody.body).toBeDefined();
-
-    console.log(`Verified post ${testId} exists with title: ${responseBody.title}`);
+      expect(responseBody.id).toBe(testId);
+      expect(responseBody.title).toBeDefined();
+      expect(responseBody.body).toBeDefined();
+    });
   });
 
-  test('DELETE - should delete the post', async ({ request }) => {
-    const testId = 1;
+  test('DELETE /posts/:id - delete a post', async ({ request }) => {
+    const response = await request.delete(`/posts/${testId}`);
 
-    const response = await request.delete(`${BASE_URL}/posts/${testId}`);
-
-    expect(response.status()).toBe(200);
-
-    console.log(`Deleted post with ID: ${testId}`);
+    await test.step('Verify response status', async () => {
+      expect(response.ok()).toBeTruthy();
+      expect(response.status()).toBe(200);
+    });
   });
 
-  test('VERIFY DELETION - should confirm the post is deleted', async ({ request }) => {
+  test('GET /posts/:id - verify post returns 404', async ({ request }) => {
     const deletedId = 999;
 
-    const response = await request.get(`${BASE_URL}/posts/${deletedId}`);
+    const response = await request.get(`/posts/${deletedId}`);
 
-    expect(response.status()).toBe(404);
-
-    console.log(`Verified post ${deletedId} returns 404 (Not Found)`);
+    await test.step('Verify response status', async () => {
+      expect(response.status()).toBe(404);
+    });
   });
-
 });
