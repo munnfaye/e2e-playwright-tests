@@ -1,10 +1,11 @@
 import { test, expect } from '@playwright/test';
-import { testPost, updatedTitle } from '../../constants/apiTestData';
+import { testPost, patchData, defaultPost, testId } from '../../constants/apiTestData';
+
+let createdPostId: number;
 
 test.describe.serial('Posts API CRUD Operations', () => {
-  const testId = 1;
 
-  test('POST /posts - create a new post', async ({ request }) => {
+  test('Step 1 - Create a new post', async ({ request }) => {
     const response = await request.post('/posts', {
       data: testPost
     });
@@ -17,15 +18,25 @@ test.describe.serial('Posts API CRUD Operations', () => {
     await test.step('Verify response body', async () => {
       const responseBody = await response.json();
 
-      expect(responseBody.id).toBeDefined();
+      expect(responseBody).toHaveProperty('id');
       expect(typeof responseBody.id).toBe('number');
       expect(responseBody.title).toBe(testPost.title);
       expect(responseBody.body).toBe(testPost.body);
-      expect(responseBody.userID).toBe(testPost.userID);
+      expect(responseBody.userId).toBe(testPost.userId);
+
+      createdPostId = responseBody.id;
     });
   });
 
-  test('GET /posts/:id - retrieve a post', async ({ request }) => {
+  test('Step 2 - Verify created post does not exist', async ({ request }) => {
+    const response = await request.get(`/posts/${createdPostId}`);
+
+    await test.step('Verify response status', async () => {
+      expect(response.status()).toBe(404);
+    });
+  });
+
+  test('Step 3 - Retrieve existing post', async ({ request }) => {
     const response = await request.get(`/posts/${testId}`);
 
     await test.step('Verify response status', async () => {
@@ -33,25 +44,19 @@ test.describe.serial('Posts API CRUD Operations', () => {
       expect(response.status()).toBe(200);
     });
 
-    await test.step('Verify response body', async () => {
+    await test.step('Verify response body matches default data', async () => {
       const responseBody = await response.json();
 
-      expect(responseBody.id).toBe(testId);
-      expect(responseBody.title).toBeDefined();
-      expect(responseBody.body).toBeDefined();
-      expect(responseBody.userId).toBeDefined();
-
-      expect(typeof responseBody.title).toBe('string');
-      expect(typeof responseBody.body).toBe('string');
-      expect(typeof responseBody.userId).toBe('number');
+      expect(responseBody.id).toBe(defaultPost.id);
+      expect(responseBody.userId).toBe(defaultPost.userId);
+      expect(responseBody.title).toBe(defaultPost.title);
+      expect(responseBody.body).toBe(defaultPost.body);
     });
   });
 
-  test('PATCH /posts/:id - update post title', async ({ request }) => {
+  test('Step 4 - Update post', async ({ request }) => {
     const response = await request.patch(`/posts/${testId}`, {
-      data: {
-        title: updatedTitle
-      }
+      data: patchData
     });
 
     await test.step('Verify response status', async () => {
@@ -59,15 +64,17 @@ test.describe.serial('Posts API CRUD Operations', () => {
       expect(response.status()).toBe(200);
     });
 
-    await test.step('Verify response body', async () => {
+    await test.step('Verify response body returns updated data', async () => {
       const responseBody = await response.json();
 
-      expect(responseBody.title).toBe(updatedTitle);
+      expect(responseBody).toHaveProperty('id');
       expect(responseBody.id).toBe(testId);
+      expect(responseBody.title).toBe(patchData.title);
+      expect(responseBody.body).toBe(patchData.body);
     });
   });
 
-  test('GET /posts/:id - verify update was applied', async ({ request }) => {
+  test('Step 5 - Verify update was not persisted', async ({ request }) => {
     const response = await request.get(`/posts/${testId}`);
 
     await test.step('Verify response status', async () => {
@@ -75,16 +82,16 @@ test.describe.serial('Posts API CRUD Operations', () => {
       expect(response.status()).toBe(200);
     });
 
-    await test.step('Verify response body', async () => {
+    await test.step('Verify original data remains unchanged', async () => {
       const responseBody = await response.json();
 
-      expect(responseBody.id).toBe(testId);
-      expect(responseBody.title).toBeDefined();
-      expect(responseBody.body).toBeDefined();
+      expect(responseBody.id).toBe(defaultPost.id);
+      expect(responseBody.title).toBe(defaultPost.title);
+      expect(responseBody.title).not.toBe(patchData.title);
     });
   });
 
-  test('DELETE /posts/:id - delete a post', async ({ request }) => {
+  test('Step 6 - Delete a post', async ({ request }) => {
     const response = await request.delete(`/posts/${testId}`);
 
     await test.step('Verify response status', async () => {
@@ -93,13 +100,21 @@ test.describe.serial('Posts API CRUD Operations', () => {
     });
   });
 
-  test('GET /posts/:id - verify post returns 404', async ({ request }) => {
-    const deletedId = 999;
-
-    const response = await request.get(`/posts/${deletedId}`);
+  test('Step 7 - Verify delete did not persist', async ({ request }) => {
+    const response = await request.get(`/posts/${testId}`);
 
     await test.step('Verify response status', async () => {
-      expect(response.status()).toBe(404);
+      expect(response.ok()).toBeTruthy();
+      expect(response.status()).toBe(200);
+    });
+
+    await test.step('Verify data still exists with default values', async () => {
+      const responseBody = await response.json();
+
+      expect(responseBody.id).toBe(defaultPost.id);
+      expect(responseBody.userId).toBe(defaultPost.userId);
+      expect(responseBody.title).toBe(defaultPost.title);
+      expect(responseBody.body).toBe(defaultPost.body);
     });
   });
 });
