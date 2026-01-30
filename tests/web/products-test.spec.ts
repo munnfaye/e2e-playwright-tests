@@ -3,7 +3,7 @@ import { testSetup, validUser, validPassword } from "../../config/testSetup";
 import { ProductsPage } from "../../pages/products.page";
 import { PRODUCT_KEYS, CHECKOUT_DATA } from "../../constants/testData";
 
-test.describe("Products Page - UI Verification", () => {
+test.describe.serial("Products Page - UI Verification", () => {
     testSetup("Verify display products page with all elements", async ({ loginPage, page }) => {
         await loginPage.enterValidUsername(validUser);
         await loginPage.enterValidPassword(validPassword);
@@ -87,82 +87,79 @@ test.describe("Products Page - Add to Cart", () => {
         const productsPage = new ProductsPage(page);
         await productsPage.verifyRemoveButtonNotVisible(PRODUCT_KEYS[2]);
     });
+});
 
-    test.describe("Products Page - Cart Navigation", () => {
+test.describe("Products Page - Cart Navigation", () => {
+    testSetup("Verify able to navigate to cart page successfully", async ({ loginPage, page }) => {
+        await loginPage.enterValidUsername(validUser);
+        await loginPage.enterValidPassword(validPassword);
+        await loginPage.clickLoginButton();
 
-        testSetup("Verify able to navigate to cart page successfully", async ({ loginPage, page }) => {
-            await loginPage.enterValidUsername(validUser);
-            await loginPage.enterValidPassword(validPassword);
-            await loginPage.clickLoginButton();
+        const productsPage = new ProductsPage(page);
+        await productsPage.addProductToCart(PRODUCT_KEYS[1]);
+        await productsPage.proceedToCart();
 
-            const productsPage = new ProductsPage(page);
-            await productsPage.addProductToCart(PRODUCT_KEYS[1]);
-            await productsPage.proceedToCart();
-
-            await expect(page).toHaveURL(/cart.html/);
-        });
-
-        testSetup("Verify able proceed to checkout from cart", async ({ loginPage, page }) => {
-            await loginPage.enterValidUsername(validUser);
-            await loginPage.enterValidPassword(validPassword);
-            await loginPage.clickLoginButton();
-
-            const productsPage = new ProductsPage(page);
-            await productsPage.addProductToCart(PRODUCT_KEYS[3]);
-            await productsPage.proceedToCart();
-            await productsPage.proceedToCheckout();
-
-            await expect(page).toHaveURL(/checkout-step-one.html/);
-        });
+        await expect(page).toHaveURL(/cart.html/);
     });
 
-    test.describe("Products Page - Complete Purchase Flow", () => {
+    testSetup("Verify able proceed to checkout from cart", async ({ loginPage, page }) => {
+        await loginPage.enterValidUsername(validUser);
+        await loginPage.enterValidPassword(validPassword);
+        await loginPage.clickLoginButton();
 
-        testSetup("Verify able to complete full purchase journey", async ({ loginPage, page }) => {
-            await loginPage.enterValidUsername(validUser);
-            await loginPage.enterValidPassword(validPassword);
-            await loginPage.clickLoginButton();
+        const productsPage = new ProductsPage(page);
+        await productsPage.addProductToCart(PRODUCT_KEYS[3]);
+        await productsPage.proceedToCart();
+        await productsPage.proceedToCheckout();
 
-            const productsPage = new ProductsPage(page);
+        await expect(page).toHaveURL(/checkout-step-one.html/);
+    });
+});
 
-            await productsPage.addProductToCart(PRODUCT_KEYS[0]);
-            await productsPage.proceedToCart();
-            await productsPage.proceedToCheckout();
-            await productsPage.fillCheckOutInformation(CHECKOUT_DATA);
-            await productsPage.completePurchase();
-            await productsPage.verifyOrderConfirmation();
-        });
+test.describe("Products Page - Complete Purchase Flow", () => {
+    testSetup("Verify able to complete full purchase journey", async ({ loginPage, page }) => {
+        await loginPage.enterValidUsername(validUser);
+        await loginPage.enterValidPassword(validPassword);
+        await loginPage.clickLoginButton();
 
-        testSetup("Verify checkout fills all required fields", async ({ loginPage, page }) => {
-            await loginPage.enterValidUsername(validUser);
-            await loginPage.enterValidPassword(validPassword);
-            await loginPage.clickLoginButton();
+        const productsPage = new ProductsPage(page);
 
-            const productsPage = new ProductsPage(page);
-            await productsPage.addProductToCart(PRODUCT_KEYS[2]);
-            await productsPage.proceedToCart();
-            await productsPage.proceedToCheckout();
-
-            await productsPage.fillCheckOutInformation(CHECKOUT_DATA);
-
-            await expect(page).toHaveURL(/checkout-step-two.html/);
-        });
-
-        testSetup("Verify order confirmation displays success message", async ({ loginPage, page }) => {
-            await loginPage.enterValidUsername(validUser);
-            await loginPage.enterValidPassword(validPassword);
-            await loginPage.clickLoginButton();
-
-            const productsPage = new ProductsPage(page);
-            await productsPage.addProductToCart(PRODUCT_KEYS[5]);
-            await productsPage.proceedToCart();
-            await productsPage.proceedToCheckout();
-            await productsPage.fillCheckOutInformation(CHECKOUT_DATA);
-            await productsPage.completePurchase();
-
-            await expect(page).toHaveURL(/checkout-complete.html/);
-            await productsPage.verifyOrderConfirmation();
-        });
+        await productsPage.addProductToCart(PRODUCT_KEYS[0]);
+        await productsPage.proceedToCart();
+        await productsPage.proceedToCheckout();
+        await productsPage.fillCheckOutInformation(CHECKOUT_DATA);
+        await productsPage.completePurchase();
+        await productsPage.verifyOrderConfirmation();
     });
 
+    testSetup("Verify checkout fills all required fields", async ({ loginPage, page }) => {
+        await loginPage.enterValidUsername(validUser);
+        await loginPage.enterValidPassword(validPassword);
+        await loginPage.clickLoginButton();
+
+        const productsPage = new ProductsPage(page);
+        await productsPage.addProductToCart(PRODUCT_KEYS[2]);
+        await productsPage.proceedToCart();
+        await productsPage.proceedToCheckout();
+
+        await productsPage.fillCheckOutInformation(CHECKOUT_DATA);
+
+        await expect(page).toHaveURL(/checkout-step-two.html/);
+    });
+
+    testSetup("Verify order confirmation displays success message", async ({ loginPage, page }) => {
+        await loginPage.enterValidUsername(validUser);
+        await loginPage.enterValidPassword(validPassword);
+        await loginPage.clickLoginButton();
+
+        const productsPage = new ProductsPage(page);
+        await productsPage.addProductToCart(PRODUCT_KEYS[5]);
+        await productsPage.proceedToCart();
+        await productsPage.proceedToCheckout();
+        await productsPage.fillCheckOutInformation(CHECKOUT_DATA);
+        await productsPage.completePurchase();
+
+        await expect(page).toHaveURL(/checkout-complete.html/);
+        await productsPage.verifyOrderConfirmation();
+    });
 });
